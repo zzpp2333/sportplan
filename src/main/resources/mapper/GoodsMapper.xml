@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.sportplan.dao.GoodsDao">
+    <select id="getAllGoods" resultType="com.learn.sportplan.bean.Goods">
+        SELECT * FROM `goods`
+        <if test="goodName != null">
+            WHERE goodName like #{goodName}
+        </if>
+        LIMIT #{pageStart}, #{pageSize}
+    </select>
+
+    <select id="getGoodsCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM `goods`
+        <if test="goodName != null">
+            WHERE goodName like #{goodName}
+        </if>
+    </select>
+
+    <select id="getGood" resultType="com.learn.sportplan.bean.Goods">
+        SELECT * FROM `goods` WHERE id=#{id}
+    </select>
+
+    <insert id="addGoods">
+        INSERT INTO `goods`
+        (goodName, price, inStock, createUserId, imgUrl, modelType, controlMode, mainFunction,
+        wifiFunction, battery, characteristic, size, other, remark)
+        VALUE
+        (#{goodName}, #{price}, #{inStock}, #{createUserId}, #{imgUrl}, #{modelType}, #{controlMode}, #{mainFunction},
+        #{wifiFunction}, #{battery}, #{characteristic}, #{size}, #{other}, #{remark})
+    </insert>
+
+    <update id="updateGood">
+        UPDATE `goods` SET goodName=#{goodName}, price=#{price}, inStock=#{inStock}, createUserId=#{createUserId},
+        imgUrl=#{imgUrl}, modelType=#{modelType}, controlMode=#{controlMode}, mainFunction=#{mainFunction},
+        wifiFunction=#{wifiFunction}, battery=#{battery}, characteristic=#{characteristic}, size=#{size},
+        other=#{other}, remark=#{remark} WHERE id=#{id}
+    </update>
+
+    <delete id="deleteGood">
+        DELETE FROM `goods` WHERE id=#{id}
+    </delete>
+</mapper>
