@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-
+//ResponseBody 表示该方法的返回结果直接写入 HTTP response body 中
 @RestController
 public class UserController {
 
     @Autowired
     private UserDao userDao;
 
+//    RequestMapping: 将请求和处理请求的控制器方法关联起来
     @RequestMapping("/allUser")
     public String getUserList(QueryInfo queryInfo){
-        // 获取 最大列表树 和 当前编号
+        // 获取 最大列表数 和 当前编号
         int numbers = userDao.getUserCounts("%"+queryInfo.getQuery()+"%");
         int pageStart = (queryInfo.getPageStart() - 1) * queryInfo.getPageSize();
         List<User> users = userDao.getAllUser("%"+queryInfo.getQuery()+"%", pageStart, queryInfo.getPageSize());

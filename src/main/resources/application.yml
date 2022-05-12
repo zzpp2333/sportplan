@@ -14,3 +14,14 @@ mybatis:
 server:
   # vue占用8080
   port: 9000
+
+#jwt配置
+jwt:
+  # 请求头
+  tokenHeader: Authorization
+  # 签名
+  secret: tryasecret1234
+  # 过期时间
+  expiration: 1800
+  # token头部
+  tokenHead: "Bearer "

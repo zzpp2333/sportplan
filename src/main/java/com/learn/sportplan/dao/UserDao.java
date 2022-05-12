@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface UserDao {
     public User getUserByMessage(@Param("username") String username, @Param("password") String password);
+    public User getUserByUsername(String username);
     public List<User> getAllUser(@Param("username") String username, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
     public int getUserCounts(@Param("username") String username);
     // 根据主键id和状态码修改state

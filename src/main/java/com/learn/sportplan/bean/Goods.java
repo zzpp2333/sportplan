@@ -1,7 +1,10 @@
 package com.learn.sportplan.bean;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class Goods {
     private int id; // 主键id 自增
     private String goodName; // 商品名
@@ -39,146 +42,5 @@ public class Goods {
         this.size = size;
         this.other = other;
         this.remark = remark;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public int getInStock() {
-        return inStock;
-    }
-
-    public int getCreateUserId() {
-        return createUserId;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public String getModelType() {
-        return modelType;
-    }
-
-    public String getControlMode() {
-        return controlMode;
-    }
-
-    public String getMainFunction() {
-        return mainFunction;
-    }
-
-    public String getWifiFunction() {
-        return wifiFunction;
-    }
-
-    public String getBattery() {
-        return battery;
-    }
-
-    public String getCharacteristic() {
-        return characteristic;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public String getOther() {
-        return other;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public void setInStock(int inStock) {
-        this.inStock = inStock;
-    }
-
-    public void setCreateUserId(int createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public void setModelType(String modelType) {
-        this.modelType = modelType;
-    }
-
-    public void setControlMode(String controlMode) {
-        this.controlMode = controlMode;
-    }
-
-    public void setMainFunction(String mainFunction) {
-        this.mainFunction = mainFunction;
-    }
-
-    public void setWifiFunction(String wifiFunction) {
-        this.wifiFunction = wifiFunction;
-    }
-
-    public void setBattery(String battery) {
-        this.battery = battery;
-    }
-
-    public void setCharacteristic(String characteristic) {
-        this.characteristic = characteristic;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "id=" + id +
-                ", goodName='" + goodName + '\'' +
-                ", price=" + price +
-                ", inStock=" + inStock +
-                ", createUserId=" + createUserId +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", modelType='" + modelType + '\'' +
-                ", controlModel='" + controlMode + '\'' +
-                ", mainFunction='" + mainFunction + '\'' +
-                ", wifiFunction='" + wifiFunction + '\'' +
-                ", battery='" + battery + '\'' +
-                ", characteristic='" + characteristic + '\'' +
-                ", size='" + size + '\'' +
-                ", other='" + other + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
     }
 }
