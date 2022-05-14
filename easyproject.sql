@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS `easyuser` (
 DELETE FROM `easyuser`;
 /*!40000 ALTER TABLE `easyuser` DISABLE KEYS */;
 INSERT INTO `easyuser` (`id`, `username`, `password`, `email`, `role`, `state`) VALUES
-	(1, 'admin', '123456', '123@qq.com', '超级管理员', 1),
-	(2, 'naughty', '888888', '456@qq.com', '普通管理员', 0),
-	(3, 'flysky01', '987654', 'qwe@qq.com', '普通用户', 1),
-	(4, 'anglybirds', '321654', 'aaaa@163.com', '普通用户', 0),
-	(7, 'admin003', 'q123456', 'c@qq.com', '普通用户', 1),
-	(8, 'admin005', '123456', 'cxz@qq.com', '普通用户', 0),
-	(9, 'admin007', '123456', 'rty@qq.com', '普通用户', 0),
-	(11, 'newme', '123123', '1132066026@qq.com', '普通用户', 0);
+	(1, 'admin', '$2a$10$40nMYPddlMUJGqqW11NHmug/QkR3sq7R89fnAFK4v00TPcDfAa3tO', '123@qq.com', '超级管理员', 1),
+	(2, 'naughty', '$2a$10$kY3ebMb7cppEwlb87swzwuthWwS6Uk8tPrdhGbgrsyLOtaxdpqY1i', '456@qq.com', '普通管理员', 0),
+	(3, 'flysky01', '$2a$10$fu3gMy.SUHA3Vn1kJ8PraOrnZwkKnWle4ylqrKpWYasy6Kfa3SVjC', 'qwe@qq.com', '普通用户', 1),
+	(4, 'anglybirds', '$2a$10$Dr5NyTexV7fm8Ix1iXOcQuzcH.YLwCb3gN/fLYSjtOmnKxwhCTB2q', 'aaaa@163.com', '普通用户', 0),
+	(7, 'admin003', '$2a$10$mDBLB2wC4zmxcpCYsafl8Ox0pgUtzzG5w1TXnd8PzKoayJZ.6t4Mi', 'c@qq.com', '普通用户', 1),
+	(8, 'admin005', '$2a$10$YcpbZSFcBpXLWrgGKBHHsu.3JdP8ugCIMFQWPMqNcNkgrBTFmqFEm', 'cxz@qq.com', '普通用户', 0),
+	(9, 'admin007', '$2a$10$T8P8fIujPHRzd3lsqWbzEe6vWgy/pSHOQTLbhmGgGlE3BH1TPmIRa', 'rty@qq.com', '普通用户', 0),
+	(11, 'newme', '$2a$10$rTRNX.pnnzYp/UNaDB3IEerruxttZ/2ywgJeMa6teweK/CrWPiZuC', '1132066026@qq.com', '普通用户', 1);
 /*!40000 ALTER TABLE `easyuser` ENABLE KEYS */;
 
 -- 导出  表 easyproject.goods 结构
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  easyproject.goods 的数据：~10 rows (大约)
+-- 正在导出表  easyproject.goods 的数据：~9 rows (大约)
 DELETE FROM `goods`;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
 INSERT INTO `goods` (`id`, `goodName`, `price`, `inStock`, `createUserId`, `imgUrl`, `modelType`, `controlMode`, `mainFunction`, `wifiFunction`, `battery`, `characteristic`, `size`, `other`, `remark`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `goods` (`id`, `goodName`, `price`, `inStock`, `createUserId`, `imgU
 	(6, '智能滑雪板', 400, 5, 1, NULL, '安卓Android,苹果iOS', '按钮', '如今已入深冬，正是叫上小伙伴一起到山上滑雪的季节，那么您试过智能滑雪板吗?没有的话，可以尝试一下日本Cerevo公司的XON Snow-1智能滑雪板，它能记录用户使用中的运动情况，及滑行时的重量分布状况。', '蓝牙', '充电：约5.5小时', '　该产品不仅功能强大，而且“逼格感”十足。其在捆绑带上配备LED灯，随着重量分布发生变化时亮起，虽然只是装饰作用，但运动者不就是要的这个范儿吗?', '产品尺寸（折叠前）约1080×430×1140mm, 产品尺寸（折叠后）约1080×430×490mm', '　该产品不仅功能强大，而且“逼格感”十足。其在捆绑带上配备LED灯，随着重量分布发生变化时亮起，虽然只是装饰作用，但运动者不就是要的这个范儿吗?', 'null； 管理员：阿杰于2021-04-21 11:46:26 --> 更新了商品:智能滑雪板'),
 	(7, '瑜伽垫', 20.45, 25, 1, '', '', NULL, '', '', '', '', '', '', ''),
 	(9, '无绳跳绳', 45, 100, 1, '', '', NULL, '', '', '', '', '', '', ''),
-	(11, '华强北蓝牙耳机', 20, 500, 1, '', '', NULL, '', '', '', '', '', '', '');
+	(11, '华强北蓝牙耳机', 26, 500, 1, '', '', NULL, '', '', '', '', '', '', '');
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
 
 -- 导出  表 easyproject.mainmenu 结构
@@ -82,15 +82,16 @@ CREATE TABLE IF NOT EXISTS `mainmenu` (
   `id` int(50) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  easyproject.mainmenu 的数据：~2 rows (大约)
 DELETE FROM `mainmenu`;
 /*!40000 ALTER TABLE `mainmenu` DISABLE KEYS */;
-INSERT INTO `mainmenu` (`id`, `title`, `path`) VALUES
-	(100, '权限管理', '/admin'),
-	(200, '运动平台', '/use');
+INSERT INTO `mainmenu` (`id`, `title`, `path`, `icon`) VALUES
+	(100, '权限管理', '/admin', 'iconfont icon-guanliyuan'),
+	(200, '运动平台', '/sport', 'iconfont icon-shouye');
 /*!40000 ALTER TABLE `mainmenu` ENABLE KEYS */;
 
 -- 导出  表 easyproject.order 结构
@@ -165,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `roles_menus` (
   KEY `menu_id` (`menu_id`) USING BTREE,
   CONSTRAINT `roles_menus_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `roles_menus_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  easyproject.roles_menus 的数据：~21 rows (大约)
 DELETE FROM `roles_menus`;
@@ -193,6 +194,50 @@ INSERT INTO `roles_menus` (`id`, `role_id`, `menu_id`) VALUES
 	(20, 3, 202),
 	(21, 3, 203);
 /*!40000 ALTER TABLE `roles_menus` ENABLE KEYS */;
+
+-- 导出  表 easyproject.roles_permissions 结构
+CREATE TABLE IF NOT EXISTS `roles_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL COMMENT '角色编号',
+  `permission_id` int(11) NOT NULL COMMENT '权限编号',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `role_id` (`role_id`) USING BTREE,
+  KEY `permission_id` (`permission_id`) USING BTREE,
+  CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+-- 正在导出表  easyproject.roles_permissions 的数据：~26 rows (大约)
+DELETE FROM `roles_permissions`;
+/*!40000 ALTER TABLE `roles_permissions` DISABLE KEYS */;
+INSERT INTO `roles_permissions` (`id`, `role_id`, `permission_id`) VALUES
+	(1, 1, 1),
+	(2, 1, 2),
+	(3, 1, 3),
+	(4, 1, 4),
+	(5, 1, 5),
+	(6, 1, 6),
+	(7, 1, 7),
+	(8, 1, 8),
+	(9, 1, 9),
+	(10, 1, 10),
+	(11, 1, 11),
+	(12, 1, 12),
+	(13, 1, 13),
+	(14, 1, 14),
+	(15, 1, 15),
+	(16, 1, 16),
+	(17, 2, 1),
+	(18, 2, 4),
+	(19, 2, 5),
+	(20, 2, 7),
+	(21, 2, 8),
+	(22, 2, 10),
+	(23, 2, 11),
+	(24, 2, 13),
+	(25, 2, 14),
+	(26, 2, 16);
+/*!40000 ALTER TABLE `roles_permissions` ENABLE KEYS */;
 
 -- 导出  表 easyproject.sport 结构
 CREATE TABLE IF NOT EXISTS `sport` (
@@ -226,6 +271,8 @@ CREATE TABLE IF NOT EXISTS `submenu` (
   `id` int(50) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL,
+  `component` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
   `mid` int(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `mid` (`mid`),
@@ -235,14 +282,14 @@ CREATE TABLE IF NOT EXISTS `submenu` (
 -- 正在导出表  easyproject.submenu 的数据：~7 rows (大约)
 DELETE FROM `submenu`;
 /*!40000 ALTER TABLE `submenu` DISABLE KEYS */;
-INSERT INTO `submenu` (`id`, `title`, `path`, `mid`) VALUES
-	(101, '用户列表', '/user', 100),
-	(102, '修改权限', '/rights', 100),
-	(103, ' 运动模块', '/sport', 100),
-	(104, '商品模块', '/goods', 100),
-	(201, '运动科普', '/Introduction', 200),
-	(202, '卡路里', '/calories', 200),
-	(203, '营养配餐', '/food', 200);
+INSERT INTO `submenu` (`id`, `title`, `path`, `component`, `icon`, `mid`) VALUES
+	(101, '用户列表', '/user', 'admin/UserList', 'iconfont icon-denglu', 100),
+	(102, '修改权限', '/rights', 'admin/UserRight', 'iconfont icon-mima', 100),
+	(103, ' 运动模块', '/sport', 'admin/Sport', 'iconfont icon-shouye', 100),
+	(104, '商品模块', '/goods', 'admin/GoodList', 'iconfont icon-shangpin', 100),
+	(201, '运动科普', '/Introduction', 'sport/Introduction', 'iconfont icon-shu', 200),
+	(202, '卡路里', '/calories', 'food/FoodCalories', 'iconfont icon-qialuli', 200),
+	(203, '营养配餐', '/food', 'food/Food', 'iconfont icon-shiwu', 200);
 /*!40000 ALTER TABLE `submenu` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
