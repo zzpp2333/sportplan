@@ -18,7 +18,7 @@
         </if>
     </select>
 
-    <select id="getGood" resultType="com.learn.sportplan.bean.Goods">
+    <select id="getGoodById" resultType="com.learn.sportplan.bean.Goods">
         SELECT * FROM `goods` WHERE id=#{id}
     </select>
 

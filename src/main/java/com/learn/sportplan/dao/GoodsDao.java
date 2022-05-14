@@ -14,7 +14,7 @@ public interface GoodsDao {
     public List<Goods> getAllGoods(@Param("goodName") String goodName, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
     // 增加商品
     public int addGoods(Goods goods);
-    public Goods getGood(int id);
+    public Goods getGoodById(int id);
     public int updateGood(Goods good);
     public int deleteGood(int id);
 }

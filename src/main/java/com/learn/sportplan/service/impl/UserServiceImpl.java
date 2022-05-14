@@ -1,14 +1,18 @@
 package com.learn.sportplan.service.impl;
 
+import com.learn.sportplan.bean.PageResult;
+import com.learn.sportplan.bean.QueryInfo;
 import com.learn.sportplan.bean.Result;
 import com.learn.sportplan.bean.User;
 import com.learn.sportplan.dao.UserDao;
 import com.learn.sportplan.service.UserService;
 import com.learn.sportplan.util.TokenUtil;
 import com.learn.sportplan.vo.LoginVo;
+import com.learn.sportplan.vo.UpdateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -59,7 +64,56 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public Result getUserList(QueryInfo queryInfo) {
+        // 获取 最大列表数 和 当前编号
+        int numbers = userDao.getUserCounts("%"+queryInfo.getQuery()+"%");
+        int pageStart = (queryInfo.getPageStart() - 1) * queryInfo.getPageSize();
+        List<User> users = userDao.getAllUser("%"+queryInfo.getQuery()+"%", pageStart, queryInfo.getPageSize());
+        return Result.success("获取用户列表成功", new PageResult<User>(numbers, users));
+    }
+
+    @Override
+    public Result updateUserState(Integer id, Boolean state) {
+        int res = userDao.updateState(id, state);
+        return res > 0 ? Result.success("更新用户状态成功") : Result.fail("更新用户状态失败");
+    }
+
+    @Override
+    public Result addUser(User user) {
+        // 开始默认为 普通用户 并且为未启用状态 在超级管理员审核通过后才变为启用状态
+        user.setRole("普通用户");
+        user.setState(false);
+        int res = userDao.addUser(user);
+        return res > 0 ? Result.success("增加用户成功") : Result.fail("增加用户失败");
+    }
+
+    @Override
+    public Result deleteUser(int id) {
+        int res = userDao.deleteUser(id);
+        return res > 0 ? Result.success("删除用户成功") : Result.fail("删除用户失败");
+    }
+
+    @Override
+    public Result getUserById(int id) {
+        User user = userDao.getUserById(id);
+        return Result.success("编辑用户信息", user);
+    }
+
+    @Override
+    public Result updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        int res = userDao.updateUser(user);
+        return res > 0 ? Result.success("编辑用户信息成功") : Result.fail("编辑用户信息失败");
+    }
+
+    @Override
+    public Result updateRole(User user) {
+        int res = userDao.updateRole(user);
+        return res > 0 ? Result.success("更新权限成功") : Result.fail("更新权限失败");
     }
 }

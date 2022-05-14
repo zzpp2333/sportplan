@@ -10,6 +10,7 @@ import com.learn.sportplan.vo.LoginVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +30,7 @@ public class LoginController {
 //    private UserDetailsService userDetailsService;
 
     @Autowired
+    @Qualifier("userServiceImpl")
     private UserService userService;
 
     @ApiOperation(value = "登录接口")

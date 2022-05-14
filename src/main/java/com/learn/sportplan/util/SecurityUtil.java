@@ -7,7 +7,9 @@ public class SecurityUtil { // 获取当前登录用户的基本信息
 
     // 从Security主体信息中获取用户信息
     public static User getUser(){
-        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setPassword(null);
+        return user;
     }
 
     public static String getUsername(){

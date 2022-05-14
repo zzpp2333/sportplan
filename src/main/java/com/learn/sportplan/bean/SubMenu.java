@@ -8,13 +8,17 @@ public class SubMenu {
     private int id;
     private String title;
     private String path;
+    private String icon;
+    private String component;
 
     public SubMenu() {
     }
 
-    public SubMenu(String title, String path) {
+    public SubMenu(String title, String component, String path, String icon) {
         this.title = title;
         this.path = path;
+        this.icon = icon;
+        this.component = component;
     }
 
 }

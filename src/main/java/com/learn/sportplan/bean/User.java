@@ -1,5 +1,8 @@
 package com.learn.sportplan.bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.learn.sportplan.util.CustomAuthorityDeserializer;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,13 +17,27 @@ import java.util.List;
  */
 @Data
 public class User implements UserDetails {
+
+    @ApiModelProperty(value = "主键")
     private int id; //主键 自增
+
+    @ApiModelProperty(value = "用户名")
     private String username; //用户名
+
+    @ApiModelProperty(value = "登陆密码")
     private String password; //密码
+
+    @ApiModelProperty(value = "邮件")
     private String email; //邮件
-    private String role; //角色 一个用户只有一个角色 一个角色有多个权限，可以访问多种页面资源 如果role直接设置为Role类型 那么当更改role时 Role也需要重新设置
+
+    @ApiModelProperty(value = "角色")
+    private String role; //角色 一个用户只有一个角色 一个角色有多个权限，可以访问多种页面资源
+
+    @ApiModelProperty(value = "状态")
     private boolean state; //状态
-    private List<Role> roleList;
+
+    @ApiModelProperty(value = "角色列表")
+    private List<Role> roleList; // 在从数据库中获取User时 会根据role从关联的role roles_menus roles_permissions表中获得相关信息
 
     public User(){
         //空构造
@@ -37,12 +54,21 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 权限数据
         List<GrantedAuthority> authorities = new ArrayList<>();
-        this.roleList.parallelStream().forEach(role1 -> {
-            authorities.add(new SimpleGrantedAuthority(role1.getName()));
-        });
+        if(this.roleList != null && this.roleList.size() > 0){
+            this.roleList.parallelStream().forEach(role1 -> {
+                authorities.add(new SimpleGrantedAuthority(role1.getName()));
+                List<Permission> permissions = role1.getPermissions();
+                if(permissions != null && permissions.size() > 0) {
+                    permissions.forEach(permission -> {
+                        authorities.add(new SimpleGrantedAuthority(permission.getPermission()));
+                    });
+                }
+            });
+        }
         return authorities;
     }
 

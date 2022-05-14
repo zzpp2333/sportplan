@@ -1,77 +1,66 @@
 package com.learn.sportplan.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.learn.sportplan.bean.PageResult;
 import com.learn.sportplan.bean.QueryInfo;
+import com.learn.sportplan.bean.Result;
 import com.learn.sportplan.bean.User;
-import com.learn.sportplan.dao.UserDao;
+import com.learn.sportplan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
 //ResponseBody 表示该方法的返回结果直接写入 HTTP response body 中
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserDao userDao;
+    @Qualifier("userServiceImpl")
+    private UserService userService;
 
 //    RequestMapping: 将请求和处理请求的控制器方法关联起来
     @RequestMapping("/allUser")
-    public String getUserList(QueryInfo queryInfo){
-        // 获取 最大列表数 和 当前编号
-        int numbers = userDao.getUserCounts("%"+queryInfo.getQuery()+"%");
-        int pageStart = (queryInfo.getPageStart() - 1) * queryInfo.getPageSize();
-        List<User> users = userDao.getAllUser("%"+queryInfo.getQuery()+"%", pageStart, queryInfo.getPageSize());
-        HashMap<String, Object> res = new HashMap<>();
-        res.put("numbers", numbers);
-        res.put("data", users);
-        return JSON.toJSONString(res);
+    public Result getUserList(QueryInfo queryInfo){
+        return userService.getUserList(queryInfo);
+//        HashMap<String, Object> res = new HashMap<>();
+//        res.put("numbers", numbers);
+//        res.put("data", users);
+//        return JSON.toJSONString(res);
     }
 
     @RequestMapping("/userState")
-    public String updateUserState(@RequestParam("id") Integer id, @RequestParam("state") Boolean state){
-        int i = userDao.updateState(id, state);
-        return i > 0 ? "success" : "error";
+    public Result updateUserState(@RequestParam("id") Integer id, @RequestParam("state") Boolean state){
+        return userService.updateUserState(id, state);
     }
 
     @RequestMapping("/addUser")
-    public String addUser(@RequestBody User user){
+    public Result addUser(@RequestBody User user){
 //        开始默认为 普通用户 并且为未启用状态 在超级管理员审核通过后才变为启用状态
-        user.setRole("普通用户");
-        user.setState(false);
-        int res = userDao.addUser(user);
-        return res > 0 ? "success" : "error";
+        return userService.addUser(user);
     }
 
     @RequestMapping("/deleteUser")
-    public String deleteUser(int id){
-        int res = userDao.deleteUser(id);
-        return res > 0 ? "success" : "error";
+    public Result deleteUser(int id){
+        return userService.deleteUser(id);
     }
 
     @RequestMapping("/getUpdate")
-    public String getUpdateUser(int id){
-        User user = userDao.getUpdateUser(id);
-//        System.out.println(user);
-        return JSON.toJSONString(user);
+    public Result getUpdateUser(int id){
+        return userService.getUserById(id);
     }
 
     @RequestMapping("/updateUser")
-    public String updateUser(@RequestBody User user){
+    public Result updateUser(@RequestBody User user){
 //        System.out.println(user);
-        int res = userDao.updateUser(user);
-        return res > 0 ? "success" : "error";
+        return userService.updateUser(user);
     }
 
     @RequestMapping("/updateRole")
-    public String updateRole(@RequestBody User user){
+    public Result updateRole(@RequestBody User user){
 //        System.out.println(user);
-        int res = userDao.updateRole(user);
-//        System.out.println(i);
-        return res > 0 ? "success" : "error";
+        return userService.updateRole(user);
     }
 }
