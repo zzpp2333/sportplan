@@ -1,5 +1,7 @@
 package com.learn.sportplan.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.learn.sportplan.bean.PageResult;
 import com.learn.sportplan.bean.QueryInfo;
 import com.learn.sportplan.bean.Result;
@@ -71,10 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getUserList(QueryInfo queryInfo) {
         // 获取 最大列表数 和 当前编号
-        int numbers = userDao.getUserCounts("%"+queryInfo.getQuery()+"%");
-        int pageStart = (queryInfo.getPageStart() - 1) * queryInfo.getPageSize();
-        List<User> users = userDao.getAllUser("%"+queryInfo.getQuery()+"%", pageStart, queryInfo.getPageSize());
-        return Result.success("获取用户列表成功", new PageResult<User>(numbers, users));
+        PageHelper.startPage(queryInfo.getPageStart(), queryInfo.getPageSize());
+        Page<User> page = userDao.getAllUser(queryInfo.getQuery());
+        long total = page.getTotal();
+        List<User> result = page.getResult();
+        return new PageResult(total, result);
     }
 
     @Override

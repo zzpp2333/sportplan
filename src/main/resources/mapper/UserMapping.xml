@@ -70,10 +70,9 @@
     <select id="getAllUser" resultMap="mainMap">
         SELECT * FROM `easyuser`
         <!--    动态SQL 根据username进行模糊查询 非必须    -->
-        <if test="username != null">
-            WHERE username like #{username}
+        <if test="username != null  and username.length > 0">
+            WHERE username like concat('%', #{username}, '%')
         </if>
-        LIMIT #{pageStart}, #{pageSize}
     </select>
 
     <select id="getUserCounts" resultType="java.lang.Integer">
@@ -99,7 +98,19 @@
     </insert>
 
     <update id="updateUser">
-        UPDATE `easyuser` SET username=#{username}, password=#{password}, email=#{email} WHERE id=#{id}
+        UPDATE `easyuser` SET
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="email != null">
+                email=#{email}
+            </if>
+        </set>
+        WHERE id=#{id}
     </update>
 
     <update id="updateRole">

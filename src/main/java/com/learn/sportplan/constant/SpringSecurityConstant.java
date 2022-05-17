@@ -9,6 +9,7 @@ public class SpringSecurityConstant {
 
             //swagger相关
             "/doc.html",
+            "/favicon.ico",
             "/swagger-ui.html",
             "/webjars/**",
             "/swagger-resources/**",

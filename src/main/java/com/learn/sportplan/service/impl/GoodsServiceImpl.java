@@ -1,5 +1,7 @@
 package com.learn.sportplan.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.learn.sportplan.bean.Goods;
 import com.learn.sportplan.bean.PageResult;
 import com.learn.sportplan.bean.QueryInfo;
@@ -19,10 +21,11 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Result getGoodsList(QueryInfo queryInfo) {
-        int numbers = goodsDao.getGoodsCount("%" + queryInfo.getQuery() + "%");
-        int pageStart = (queryInfo.getPageStart() - 1) * queryInfo.getPageSize();
-        List<Goods> goodsList = goodsDao.getAllGoods("%"+queryInfo.getQuery()+"%", pageStart, queryInfo.getPageSize());
-        return Result.success("获取商品信息成功", new PageResult<Goods>(numbers, goodsList));
+        PageHelper.startPage(queryInfo.getPageStart(), queryInfo.getPageSize());
+        Page<Goods> page = goodsDao.getAllGoods(queryInfo.getQuery());
+        long total = page.getTotal();
+        List<Goods> result = page.getResult();
+        return new PageResult(total, result);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Result getGoodById(int id) {
         Goods res = goodsDao.getGoodById(id);
-        System.out.println(res);
+//        System.out.println(res);
         return Result.success("获取商品信息", res);
     }
 
@@ -43,7 +46,7 @@ public class GoodsServiceImpl implements GoodsService {
     public Result updateGood(Goods good) {
         System.out.println(good);
         int res = goodsDao.updateGood(good);
-        System.out.println(res);
+//        System.out.println(res);
         return res > 0 ? Result.success("编辑商品信息成功") : Result.fail("编辑商品信息失败");
     }
 

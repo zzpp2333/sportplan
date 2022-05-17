@@ -1,5 +1,7 @@
 package com.learn.sportplan.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.learn.sportplan.util.CustomAuthorityDeserializer;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,6 +18,7 @@ import java.util.List;
  * User实体
  */
 @Data
+@JsonIgnoreProperties({"enabled","accountNonExpired", "accountNonLocked", "credentialsNonExpired", "authorities"})
 public class User implements UserDetails {
 
     @ApiModelProperty(value = "主键")

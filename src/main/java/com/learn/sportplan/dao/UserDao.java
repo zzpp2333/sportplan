@@ -1,5 +1,6 @@
 package com.learn.sportplan.dao;
 
+import com.github.pagehelper.Page;
 import com.learn.sportplan.bean.MainMenu;
 import com.learn.sportplan.bean.Permission;
 import com.learn.sportplan.bean.Role;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface UserDao {
     public User getUserByMessage(@Param("username") String username, @Param("password") String password);
     public User getUserByUsername(String username);
-    public List<User> getAllUser(@Param("username") String username, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
+    public Page<User> getAllUser(@Param("username") String username);
     public int getUserCounts(@Param("username") String username);
 
     // 根据主键id和状态码修改state

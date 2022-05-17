@@ -5,10 +5,9 @@
 <mapper namespace="com.learn.sportplan.dao.GoodsDao">
     <select id="getAllGoods" resultType="com.learn.sportplan.bean.Goods">
         SELECT * FROM `goods`
-        <if test="goodName != null">
-            WHERE goodName like #{goodName}
+        <if test="goodName != null and goodName.length > 0">
+            WHERE goodName like concat('%', #{goodName}, '%')
         </if>
-        LIMIT #{pageStart}, #{pageSize}
     </select>
 
     <select id="getGoodsCount" resultType="java.lang.Integer">

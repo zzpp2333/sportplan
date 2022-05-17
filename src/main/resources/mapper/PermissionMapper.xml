@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.sportplan.dao.PermissionDao">
+    <select id="getPermissions" resultType="com.learn.sportplan.bean.Permission">
+        SELECT * FROM permission
+        <if test="query != null and query.length > 0">
+            WHERE name like concat('%', #{query}, '%') or permission like concat('%', #{query}, '%')
+        </if>
+    </select>
+
+    <insert id="addPermission" parameterType="com.learn.sportplan.bean.Permission">
+        INSERT INTO permission
+        (name, permission)
+        VALUES
+        (#{name}, #{permission})
+    </insert>
+
+    <delete id="deletePermission" parameterType="java.lang.Long">
+        DELETE FROM permission WHERE id=#{id}
+    </delete>
+
+    <update id="updatePermission" parameterType="com.learn.sportplan.bean.Permission">
+        UPDATE permission
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="permission != null">
+                permission = #{permission}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>
