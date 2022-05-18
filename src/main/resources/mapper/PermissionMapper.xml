@@ -12,9 +12,9 @@
 
     <insert id="addPermission" parameterType="com.learn.sportplan.bean.Permission">
         INSERT INTO permission
-        (name, permission)
+        (name, permission, state)
         VALUES
-        (#{name}, #{permission})
+        (#{name}, #{permission}, #{state})
     </insert>
 
     <delete id="deletePermission" parameterType="java.lang.Long">
@@ -28,7 +28,10 @@
                 name = #{name},
             </if>
             <if test="permission != null">
-                permission = #{permission}
+                permission = #{permission},
+            </if>
+            <if test="state != null">
+                state = #{state}
             </if>
         </set>
         WHERE id = #{id}

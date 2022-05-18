@@ -15,11 +15,15 @@ public class Permission {
     @ApiModelProperty(value = "权限标签")
     private String permission;
 
+    @ApiModelProperty(value = "启用状态")
+    private boolean state;
+
     public Permission() {
     }
 
-    public Permission(String name, String permission) {
+    public Permission(String name, String permission, boolean state) {
         this.name = name;
         this.permission = permission;
+        this.state = state;
     }
 }

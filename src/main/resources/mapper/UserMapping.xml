@@ -30,7 +30,10 @@
 
     <!--  根据role的id查询roles_permissions获得role对应的权限列表  -->
     <select id="getPermission" parameterType="int" resultType="com.learn.sportplan.bean.Permission">
-        SELECT p.* FROM permission p JOIN roles_permissions a ON p.id = a.permission_id WHERE a.role_id = #{id}
+        SELECT p.* FROM permission p JOIN roles_permissions a ON p.id = a.permission_id WHERE p.state = 1
+        <if test="id != null">
+            AND a.role_id = #{id}
+        </if>
     </select>
 
     <resultMap id="menuMap" type="com.learn.sportplan.bean.MainMenu">
@@ -38,21 +41,23 @@
         <result column="title" property="title"/>
         <result column="path" property="path"/>
         <result column="icon" property="icon"/>
+        <result column="state" property="state"/>
         <collection property="subList" ofType="com.learn.sportplan.bean.SubMenu">
             <id column="sid" property="id"/>
             <result column="stitle" property="title"/>
             <result column="spath" property="path"/>
             <result column="sicon" property="icon"/>
             <result column="scomponent" property="component"/>
+            <result column="sstate" property="state"/>
         </collection>
     </resultMap>
 
     <!--  根据role的id查询roles_menus获得role对应的资源列表  -->
     <select id="getMenu" parameterType="int" resultMap="menuMap">
-        SELECT mm.*, sm.id as sid, sm.title as stitle, sm.path as spath, sm.icon as sicon, sm.component as scomponent FROM
-        mainmenu mm JOIN submenu sm ON mm.id=sm.mid
+        SELECT mm.*, sm.id as sid, sm.title as stitle, sm.path as spath, sm.icon as sicon, sm.component as scomponent, sm.state as sstate FROM
+        mainmenu mm JOIN submenu sm ON mm.id=sm.mid WHERE mm.state = 1
         <if test="id != null">
-            WHERE sm.id IN (SELECT menu_id FROM roles_menus c WHERE c.role_id = #{id})
+            AND sm.id IN (SELECT menu_id FROM roles_menus c WHERE c.role_id = #{id}) AND sm.state = 1
         </if>
     </select>
 
