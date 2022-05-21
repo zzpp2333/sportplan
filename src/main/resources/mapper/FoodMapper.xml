@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.sportplan.dao.FoodDao">
+    <!-- 查询菜品详情 -->
+    <select id="getFoods" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+        SELECT * FROM food
+        <if test="query != null and query.length > 0">
+            WHERE name LIKE CONCAT('%', #{query}, '%')
+        </if>
+    </select>
+
+    <!-- 根据菜品名匹配 -->
+    <select id="getFoodByName" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+        SELECT * FROM food WHERE name = #{name}
+    </select>
+
+    <!-- 根据菜品分类查询食物 -->
+    <select id="getFoodByTypeId" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+        SELECT * FROM food WHERE type_id = #{id}
+    </select>
+
+    <!-- 添加菜品 -->
+    <insert id="insertFood" parameterType="com.learn.sportplan.bean.Food">
+        INSERT INTO food VALUES
+        (null, #{name}, #{typeId}, #{type}, #{imageUrl}, #{nutrient}, #{calories}, #{protein}, #{fat}, #{carbohydrate}, #{dietaryFiber}, #{vitaminA},
+        #{vitaminC}, #{vitaminE}, #{carotene}, #{vitaminB1}, #{vitaminB2}, #{niacin}, #{cholesterol}, #{magnesium}, #{iron}, #{calcium},
+        #{zinc}, #{copper}, #{manganese}, #{potassium}, #{phosphorus}, #{sodium}, #{selenium})
+    </insert>
+
+    <!-- 通过迭代标签foreach批量添加菜品(collection: 集合参数名称 item: 别名 open: 语句以什么开始 separator: 语句以什么分割 close: 语句以什么结束) -->
+    <insert id="insertFoodList" parameterType="com.learn.sportplan.bean.Food">
+        INSERT INTO food VALUES
+        <foreach collection="foods" item="i" separator=",">
+            (null, #{i.name}, #{i.typeId}, #{i.type}, #{i.imageUrl}, #{i.nutrient}, #{i.calories}, #{i.protein}, #{i.fat}, #{i.carbohydrate}, #{i.dietaryFiber}, #{i.vitaminA},
+            #{i.vitaminC}, #{i.vitaminE}, #{i.carotene}, #{i.vitaminB1}, #{i.vitaminB2}, #{i.niacin}, #{i.cholesterol}, #{i.magnesium}, #{i.iron}, #{i.calcium},
+            #{i.zinc}, #{i.copper}, #{i.manganese}, #{i.potassium}, #{i.phosphorus}, #{i.sodium}, #{i.selenium})
+        </foreach>
+    </insert>
+
+    <!-- 删除菜品分类 -->
+    <delete id="deleteFood">
+        DELETE FROM food WHERE id = #{id}
+    </delete>
+
+    <!-- 修改菜品分类 -->
+    <update id="updateFood" parameterType="com.learn.sportplan.bean.Food">
+        UPDATE food
+        <set>
+            <if test="name != null and name.length > 0">
+                title = #{title},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="type != null and type.length > 0">
+                type = #{type},
+            </if>
+            <if test="imageUrl != null and imageUrl.length > 0">
+                image_url = #{imageUrl},
+            </if>
+            <if test="nutrient != null">
+                nutrient = #{nutrient},
+            </if>
+            <if test="calories != null">
+                calories = #{calories},
+            </if>
+            <if test="protein != null">
+                protein = #{protein},
+            </if>
+            <if test="fat != null">
+                fat = #{fat},
+            </if>
+            <if test="carbohydrate != null">
+                carbohydrate = #{carbohydrate},
+            </if>
+            <if test="dietaryFiber != null">
+                dietary_fiber = #{dietaryFiber},
+            </if>
+            <if test="vitaminA != null">
+                vitamin_a = #{vitaminA},
+            </if>
+            <if test="vitaminC != null">
+                vitamin_c = #{vitaminC},
+            </if>
+            <if test="vitaminE != null">
+                vitamin_e = #{vitaminE},
+            </if>
+            <if test="carotene != null">
+                carotene = #{carotene},
+            </if>
+            <if test="vitaminB1 != null">
+                vitamin_b1 = #{vitaminB1},
+            </if>
+            <if test="vitaminB2 != null">
+                vitamin_b2 = #{vitaminB2},
+            </if>
+            <if test="niacin != null">
+                niacin = #{niacin},
+            </if>
+            <if test="cholesterol != null">
+                cholesterol = #{cholesterol},
+            </if>
+            <if test="magnesium != null">
+                magnesium = #{magnesium},
+            </if>
+            <if test="iron != null">
+                iron = #{iron},
+            </if>
+            <if test="calcium != null">
+                calcium = #{calcium},
+            </if>
+            <if test="zinc != null">
+                zinc = #{zinc},
+            </if>
+            <if test="copper != null">
+                copper = #{copper},
+            </if>
+            <if test="manganese != null">
+                manganese = #{manganese},
+            </if>
+            <if test="potassium != null">
+                potassium = #{potassium},
+            </if>
+            <if test="phosphorus != null">
+                phosphorus = #{phosphorus},
+            </if>
+            <if test="sodium != null">
+                sodium = #{sodium},
+            </if>
+            <if test="selenium != null">
+                selenium = #{selenium},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

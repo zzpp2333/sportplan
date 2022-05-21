@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.sportplan.dao.FoodTypeDao">
+    <resultMap id="mainMap" type="com.learn.sportplan.bean.FoodType">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="icon" property="icon"/>
+        <collection property="foods" select="getFoodsByType" column="title" ofType="com.learn.sportplan.bean.Food"/>
+    </resultMap>
+
+    <!--  获取食物分类以及该分类下的所有食物  -->
+    <select id="getTypes" parameterType="java.lang.String" resultMap="mainMap">
+        SELECT * FROM food_type
+        <if test="query != null and query.length > 0">
+            WHERE title LIKE CONCAT('%', #{query}, '%')
+        </if>
+    </select>
+
+    <!--  查询所有食物分类信息(不包含分类下的食物)  -->
+    <select id="getAllTypes" resultType="com.learn.sportplan.bean.FoodType">
+        SELECT * FROM food_type
+    </select>
+
+    <select id="getTypeByTitle" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.FoodType">
+        SELECT * FROM food_type WHERE title = #{title}
+    </select>
+
+    <!--  根据food_type的title查询关联的food  -->
+    <select id="getFoodsByType" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+        SELECT * FROM food where type = #{title}
+    </select>
+
+    <insert id="insertFoodType" parameterType="com.learn.sportplan.bean.FoodType">
+        INSERT INTO food_type(title, icon) VALUES (#{title}, #{icon})
+    </insert>
+
+    <delete id="deleteFoodType">
+        DELETE FROM food_type WHERE id = #{id}
+    </delete>
+
+    <update id="updateFoodType" parameterType="com.learn.sportplan.bean.FoodType">
+        UPDATE food_type
+        <set>
+            <if test="title != null and title.length > 0">
+                title = #{title},
+            </if>
+            <if test="icon != null and icon.length > 0">
+                icon = #{icon},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

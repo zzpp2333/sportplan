@@ -1,5 +1,9 @@
 # mysql
 spring:
+#  设置文件上传最大大小 默认1M
+  servlet:
+    multipart:
+      max-file-size: 30MB
   datasource:
     #MySQL配置
     driverClassName:  com.mysql.cj.jdbc.Driver
