@@ -87,6 +87,10 @@ public class FoodController {
     @GetMapping("/type/all")
     public Result getAllTypes(){
         return foodService.getAllTypes();
+//        if(null != queryInfo.getQuery() && !queryInfo.getQuery().equals("")){
+//            queryInfo.setQuery("");
+//        }
+//        return foodService.getTypes(queryInfo);
     }
 
     @ApiOperation(value = "查询所有食物")

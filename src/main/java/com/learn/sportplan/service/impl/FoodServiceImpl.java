@@ -28,6 +28,7 @@ public class FoodServiceImpl implements FoodService {
         Page<Food> foods = foodDao.getFoods(queryInfo.getQuery());
         long total = foods.getTotal();
         List<Food> result = foods.getResult();
+        System.out.println(result.get(0));
         return new PageResult(total, result);
     }
 

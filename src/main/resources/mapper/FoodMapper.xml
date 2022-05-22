@@ -3,8 +3,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.learn.sportplan.dao.FoodDao">
+    <resultMap id="mainMap" type="com.learn.sportplan.bean.Food">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type_id" property="typeId"/>
+        <result column="type" property="type"/>
+        <result column="image_url" property="imageUrl"/>
+        <result column="nutrient" property="nutrient"/>
+        <result column="calories" property="calories"/>
+        <result column="protein" property="protein"/>
+        <result column="fat" property="fat"/>
+        <result column="carbohydrate" property="carbohydrate"/>
+        <result column="dietary_fiber" property="dietaryFiber"/>
+        <result column="vitamin_a" property="vitaminA"/>
+        <result column="vitamin_c" property="vitaminC"/>
+        <result column="vitamin_e" property="vitaminE"/>
+        <result column="carotene" property="carotene"/>
+        <result column="vitamin_b1" property="vitaminB1"/>
+        <result column="vitamin_b2" property="vitaminB2"/>
+        <result column="niacin" property="niacin"/>
+        <result column="cholesterol" property="cholesterol"/>
+        <result column="magnesium" property="magnesium"/>
+        <result column="iron" property="iron"/>
+        <result column="calcium" property="calcium"/>
+        <result column="zinc" property="zinc"/>
+        <result column="copper" property="copper"/>
+        <result column="manganese" property="manganese"/>
+        <result column="potassium" property="potassium"/>
+        <result column="phosphorus" property="phosphorus"/>
+        <result column="sodium" property="sodium"/>
+        <result column="selenium" property="selenium"/>
+    </resultMap>
+
     <!-- 查询菜品详情 -->
-    <select id="getFoods" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+    <select id="getFoods" parameterType="java.lang.String" resultMap="mainMap">
         SELECT * FROM food
         <if test="query != null and query.length > 0">
             WHERE name LIKE CONCAT('%', #{query}, '%')
@@ -12,12 +44,12 @@
     </select>
 
     <!-- 根据菜品名匹配 -->
-    <select id="getFoodByName" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+    <select id="getFoodByName" parameterType="java.lang.String" resultMap="mainMap">
         SELECT * FROM food WHERE name = #{name}
     </select>
 
     <!-- 根据菜品分类查询食物 -->
-    <select id="getFoodByTypeId" parameterType="java.lang.String" resultType="com.learn.sportplan.bean.Food">
+    <select id="getFoodByTypeId" parameterType="java.lang.String" resultMap="mainMap">
         SELECT * FROM food WHERE type_id = #{id}
     </select>
 
