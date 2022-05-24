@@ -20,7 +20,7 @@ import java.security.Principal;
 import java.util.HashMap;
 
 @RestController //返回String类型
-@Api(value = "用户使用接口")
+@Api(tags = "用户登陆接口")
 public class LoginController {
 
 //    @Autowired

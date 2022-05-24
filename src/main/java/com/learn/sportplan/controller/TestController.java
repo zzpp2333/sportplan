@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController //返回字符串
-@Api(value = "测试接口")
+@Api(tags = "测试接口")
 public class TestController {
 
     @ApiOperation(value = "测试")

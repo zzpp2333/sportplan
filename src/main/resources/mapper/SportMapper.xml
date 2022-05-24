@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.sportplan.dao.SportDao">
+    <select id="getSports" resultType="com.learn.sportplan.bean.Sport">
+        SELECT * FROM sport
+        <if test="query != null and query.length > 0">
+            WHERE name LIKE CONCAT('%', #{query}, '%')
+        </if>
+    </select>
+
+    <select id="getSportById" resultType="com.learn.sportplan.bean.Sport">
+        SELECT * FROM sport WHERE id = #{id}
+    </select>
+
+    <select id="getSportByName" resultType="com.learn.sportplan.bean.Sport">
+        SELECT * FROM sport WHERE name = #{name}
+    </select>
+
+    <insert id="insertSport" parameterType="com.learn.sportplan.bean.Sport">
+        INSERT INTO sport(name, applicableAge, beneficialPosition, introduction)
+        VALUES
+        (#{name}, #{applicableAge}, #{beneficialPosition}, #{introduction})
+    </insert>
+    
+    <update id="updateSport" parameterType="com.learn.sportplan.bean.Sport">
+        UPDATE sport
+        <set>
+            <if test="name != null and name.length > 0">
+                name = #{name},
+            </if>
+            <if test="applicableAge != null and applicableAge.length > 0">
+                applicableAge = #{applicableAge},
+            </if>
+            <if test="beneficialPosition != null and beneficialPosition.length > 0">
+                beneficialPosition = #{beneficialPosition},
+            </if>
+            <if test="introduction != null and introduction.length > 0">
+                introduction = #{introduction}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSport">
+        DELETE FROM food WHERE id = #{id}
+    </delete>
+</mapper>
