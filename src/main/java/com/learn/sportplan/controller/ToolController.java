@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Api(tags = "工具")
 @RestController
@@ -24,7 +25,12 @@ public class ToolController {
     @ApiOperation("将文件上传到七牛云")
     @PostMapping("/uploadQiniu")
     public Result uploadQiniu(@RequestBody MultipartFile file) throws IOException{
-        String url = qiniuUtil.uploadQiniu(file.getBytes(), file.getOriginalFilename());
+        String uuid = UUID.randomUUID().toString().substring(0, 7);
+        String filename = file.getOriginalFilename();
+        int index = filename.lastIndexOf(".");
+        String suffix = filename.substring(index);
+//        String url = qiniuUtil.uploadQiniu(file.getBytes(), file.getOriginalFilename());
+        String url = qiniuUtil.uploadQiniu(file.getBytes(), uuid+suffix);
         return Result.success("文件上传成功", url);
     }
 }

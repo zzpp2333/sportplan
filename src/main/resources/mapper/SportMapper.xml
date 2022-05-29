@@ -19,9 +19,9 @@
     </select>
 
     <insert id="insertSport" parameterType="com.learn.sportplan.bean.Sport">
-        INSERT INTO sport(name, applicableAge, beneficialPosition, introduction)
+        INSERT INTO sport(name, creatorId, applicableAge, beneficialPosition, introduction)
         VALUES
-        (#{name}, #{applicableAge}, #{beneficialPosition}, #{introduction})
+        (#{name}, #{creatorId}, #{applicableAge}, #{beneficialPosition}, #{introduction})
     </insert>
     
     <update id="updateSport" parameterType="com.learn.sportplan.bean.Sport">
@@ -29,6 +29,9 @@
         <set>
             <if test="name != null and name.length > 0">
                 name = #{name},
+            </if>
+            <if test="creatorId != null">
+                creatorId = #{creatorId},
             </if>
             <if test="applicableAge != null and applicableAge.length > 0">
                 applicableAge = #{applicableAge},
@@ -44,6 +47,6 @@
     </update>
 
     <delete id="deleteSport">
-        DELETE FROM food WHERE id = #{id}
+        DELETE FROM sport WHERE id = #{id}
     </delete>
 </mapper>

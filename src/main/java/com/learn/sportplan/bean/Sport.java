@@ -12,6 +12,9 @@ public class Sport {
     @ApiModelProperty("运动名称")
     private String name;
 
+    @ApiModelProperty("创建者Id")
+    private int creatorId;
+
     @ApiModelProperty("适合的年龄")
     private String applicableAge;
 
